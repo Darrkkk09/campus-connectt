@@ -1,0 +1,17 @@
+import uvicorn
+from configs.db import connect_db,close_db,get_db
+from fastapi import FastAPI
+
+app = FastAPI()
+db = get_db()
+
+
+
+@app.get("/")
+def home():
+    data = list(db.users.find({}, {"_id": 0}))
+    return {"users": data}
+
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="127.0.0.1", port=8000)
