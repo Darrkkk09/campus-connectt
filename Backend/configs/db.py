@@ -1,30 +1,8 @@
-import os
-from pymongo import MongoClient, errors
-from dotenv import load_dotenv
-load_dotenv()
+import firebase_admin
+from firebase_admin import credentials, auth
 
-MONGO_URI = os.getenv("MONGO_URI")
+if not firebase_admin._apps:
+    cred = credentials.Certificate("firebase_key.json")
+    firebase_admin.initialize_app(cred)
 
-
-client = None
-db = None
-
-def connect_db():
-    global client, db
-    try:
-        client = MongoClient(MONGO_URI)
-        client.admin.command('ping')  
-        print("✅ MongoDB connected successfully!")
-        db = client["campus_connect_db"]
-    except errors.ConnectionFailure as e:
-        print("❌ MongoDB connection failed:", e)
-        db = None
-    return db
-
-def get_db():
-    return db
-
-def close_db():
-    global client
-    if client:
-        client.close()
+firebase_auth = auth

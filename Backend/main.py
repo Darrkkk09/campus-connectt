@@ -1,27 +1,29 @@
-import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from routes.resume_routes import router as resume_router
-from configs.db import connect_db, close_db, get_db
+from routes.interview_routes import router as interview_router 
+from routes.internship_routes import router as internship_router
+from routes.auth_routes import router as auth_router
 
 app = FastAPI()
 
-@app.on_event("startup")
-def startup():
-    connect_db()
-    print("✅ MongoDB connected")
-
-@app.on_event("shutdown")
-def shutdown():
-    close_db()
-    print("❌ MongoDB not connected ")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def home():
-    db = get_db()
-    return {"users": "hi" if db is not None else "Database not connected"}
+    return {"status": "ok"}
 
 app.include_router(resume_router, prefix="/resume", tags=["Resume"])
+app.include_router(interview_router, prefix="/interview", tags=["Interview"]) 
+app.include_router(internship_router, prefix="/internship", tags=["Internship"])
+app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 
 if __name__ == "__main__":
+    import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-

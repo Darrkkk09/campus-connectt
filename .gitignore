@@ -1,0 +1,66 @@
+.env
+*.env
+./backend/firebase_key.json
+../backend/firebase_key.json
+
+# Ignore history/backup folders
+.history/
+*/.history/
+**/.history/
+
+# Ignore node_modules
+node_modules/
+*/node_modules/
+**/node_modules/
+
+# Ignore build outputs
+dist/
+build/
+*.env
+*.log
+*.sqlite3
+*.db
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env.*
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ----- Python / FastAPI -----
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.coverage
+backend/coverage.xml
+backend/venv/
+backend/env/
+backend/.env
+backend/*.db
+backend/*.sqlite3
+
+# ----- Node / Next.js -----
+frontend/node_modules/
+frontend/.next/
+frontend/out/
+frontend/.env
+frontend/.env.local
+frontend/.env.development
+frontend/.env.production
+frontend/.vercel/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/package-lock.json
+frontend/.turbo/
+
+# ----- OS-specific -----
+*.swp
+*.swo
+*.bak
+*.tmp
+"@ | Out-File -Encoding UTF8 .gitignore

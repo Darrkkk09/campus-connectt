@@ -7,3 +7,5 @@ def extract_text_from_pdf(content: bytes) -> str:
     for page in reader.pages:
         text += page.extract_text() or ""
     return text.strip()
+
+
