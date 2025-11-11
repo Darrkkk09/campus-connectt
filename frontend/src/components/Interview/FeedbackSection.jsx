@@ -1,8 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export default function FeedbackSection({ feedback }) {
+    const router = useRouter();
+    const [loading, setLoading] = useState(false);
+
     if (!feedback) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
@@ -10,6 +15,13 @@ export default function FeedbackSection({ feedback }) {
             </div>
         );
     }
+
+    const handleBack = () => {
+        setLoading(true);
+        setTimeout(() => {
+            router.push("/");
+        }, 1500);
+    };
 
     return (
         <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-12 px-4 flex items-center justify-center">
@@ -85,11 +97,21 @@ export default function FeedbackSection({ feedback }) {
                             </p>
                         </div>
 
-                        <Link href="/">
-                            <button className="mt-6 px-6 py-3 bg-[#45e35d] text-black font-semibold rounded-xl hover:bg-[#39d152] transition-all">
+                        {!loading ? (
+                            <button
+                                onClick={handleBack}
+                                className="mt-6 px-6 py-3 bg-[#07c723] text-black font-semibold rounded-xl hover:bg-[#47fc65] transition-all"
+                            >
                                 ← Back to Home
                             </button>
-                        </Link>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center gap-3 mt-6">
+                                <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-[#45e35d]"></div>
+                                <p className="text-gray-300 text-sm">
+                                    Returning to home...
+                                </p>
+                            </div>
+                        )}
                     </footer>
                 )}
             </article>

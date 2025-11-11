@@ -61,7 +61,7 @@ export default function InterviewSimulator({ questions }) {
                 });
                 setAudioFile(file);
                 setIsProcessing(false);
-                setReadyForFeedback(true); // ✅ ready to show feedback button
+                setReadyForFeedback(true);
             };
 
             recorder.start();

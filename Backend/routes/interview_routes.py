@@ -13,7 +13,6 @@ router = APIRouter()
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
 
-# API keys
 ASSEMBLYAI_API_KEY = os.getenv("ASSEMBLYAI_API_KEY")
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
@@ -23,18 +22,31 @@ genai.configure(api_key=GEMINI_API_KEY)
 def transcribe_audio(file_path: str) -> str:
     headers = {"authorization": ASSEMBLYAI_API_KEY}
 
-    with open(file_path, "rb") as f:
-        upload_res = requests.post("https://api.assemblyai.com/v2/upload", headers=headers, data=f)
-    if upload_res.status_code != 200:
-        raise HTTPException(status_code=500, detail="Audio upload to AssemblyAI failed.")
+    # Retry upload
+    for attempt in range(3):
+        try:
+            with open(file_path, "rb") as f:
+                upload_res = requests.post("https://api.assemblyai.com/v2/upload", headers=headers, data=f)
+            if upload_res.status_code == 200:
+                break
+        except Exception as e:
+            print(f"Upload attempt {attempt+1} failed:", e)
+        time.sleep(2)
+    else:
+        raise HTTPException(status_code=500, detail="Audio upload to AssemblyAI failed after 3 attempts.")
+
     audio_url = upload_res.json()["upload_url"]
 
+    # Retry transcription request
     transcribe_req = {"audio_url": audio_url}
     transcribe_res = requests.post("https://api.assemblyai.com/v2/transcript", headers=headers, json=transcribe_req)
+    if transcribe_res.status_code != 200:
+        raise HTTPException(status_code=500, detail="Failed to start transcription.")
+
     transcript_id = transcribe_res.json()["id"]
 
     # Poll for completion
-    while True:
+    for _ in range(60):  # ~3 minutes max
         poll_res = requests.get(f"https://api.assemblyai.com/v2/transcript/{transcript_id}", headers=headers)
         status = poll_res.json()["status"]
         if status == "completed":
@@ -42,6 +54,7 @@ def transcribe_audio(file_path: str) -> str:
         elif status == "error":
             raise HTTPException(status_code=500, detail="Transcription failed.")
         time.sleep(3)
+    raise HTTPException(status_code=504, detail="Transcription timed out.")
 
 
 last_feedback = None

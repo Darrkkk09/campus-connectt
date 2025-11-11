@@ -2,12 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { UserCheck } from "lucide-react";
+import { Target, UserCheck, Rocket } from "lucide-react";
 
 export default function AIInterviewLanding() {
     return (
         <main className="bg-black text-white min-h-screen flex flex-col items-center justify-center">
-            <section className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between px-6 md:px-10 pt-32 pb-24 h-full">
+            <section className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between px-6 md:px-10 pt-32 pb-24 mt-10">
                 <div className="flex-1 mt-10 md:mt-0 flex justify-center">
                     <Image
                         src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80"
@@ -34,7 +34,7 @@ export default function AIInterviewLanding() {
 
                     <div className="flex justify-center md:justify-start space-x-4">
                         <Link href="/interview">
-                            <button className="bg-[#45e35d] text-black px-5 py-3 rounded-xl font-semibold hover:border hover:border-[#0df22f] hover:bg-black hover:text-[#45e35d] transition-all duration-200">
+                            <button className="border bg-[#45e35d] text-black px-5 py-3 rounded-xl font-semibold  hover:border-[#0df22f] hover:bg-black hover:text-[#45e35d] transition-all duration-200">
                                 Experience AI Interview
                             </button>
                         </Link>
@@ -55,12 +55,12 @@ export default function AIInterviewLanding() {
                                 desc: "AI tailors every question based on your resume and job role.",
                             },
                             {
-                                icon: UserCheck,
+                                icon: Target,
                                 title: "Real-time Feedback",
                                 desc: "Get instant performance analysis and improvement tips.",
                             },
                             {
-                                icon: UserCheck,
+                                icon: Rocket,
                                 title: "Boost Confidence",
                                 desc: "Practice as many times as you need until you're ready for the real deal.",
                             },

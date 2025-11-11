@@ -1,48 +1,58 @@
-from fastapi import HTTPException, Depends, status, Request, APIRouter
-import os
-import requests
+from fastapi import APIRouter, HTTPException, Depends, status
+from pydantic import BaseModel
+import os, requests
 from middlewares.Authfirebase import verify_token
 from configs.db import firebase_auth
 from dotenv import load_dotenv
 
-load_dotenv() 
-
+load_dotenv()
+router = APIRouter()
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 
-router = APIRouter()
 
-@router.get("/profile")
-def protect(user = Depends(verify_token)):
-    return {"message": "This is a protected route", "user": user}   
+# Request body models
+class SignupRequest(BaseModel):
+    name: str
+    email: str
+    password: str
 
-@router.post("/signup")
-async def signup(req: Request):
-    data = await req.json()
-    name = data.get("name")
-    email = data.get("email")
-    password = data.get("password")
-    if not name or not email or not password:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=" name and Email and password are required")
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+@router.get("/profile", summary="Protected route")
+def profile(user=Depends(verify_token)):
+    return {"message": "This is a protected route", "user": user}
+
+
+@router.post("/signup", summary="Register a new user")
+def signup(data: SignupRequest):
     try:
-        user = firebase_auth.create_user(display_name = name,email=email, password=password)
-        return {"message": "User created", 
-                "name" : user.display_name,
-                "uid": user.uid,
-                "email": user.email
-                }
+        user = firebase_auth.create_user(
+            display_name=data.name,
+            email=data.email,
+            password=data.password,
+        )
+        return {
+            "message": "User created successfully",
+            "uid": user.uid,
+            "name": user.display_name,
+            "email": user.email,
+        }
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=400, detail=str(e))
 
-@router.post("/login")
-async def login(req: Request):
-    data = await req.json()
-    email = data.get("email")
-    password = data.get("password")
-    if not email or not password:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email and password are required")
 
+@router.post("/login", summary="Login with email and password")
+def login(data: LoginRequest):
     url = f"https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key={FIREBASE_API_KEY}"
-    payload = {"email": email, "password": password, "returnSecureToken": True}
+    payload = {
+        "email": data.email,
+        "password": data.password,
+        "returnSecureToken": True,
+    }
 
     response = requests.post(url, json=payload)
     if response.status_code == 200:
@@ -52,7 +62,10 @@ async def login(req: Request):
             "idToken": res.get("idToken"),
             "refreshToken": res.get("refreshToken"),
             "uid": res.get("localId"),
-            "expiresIn": res.get("expiresIn")
+            "expiresIn": res.get("expiresIn"),
         }
     else:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid email or password")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid email or password.",
+        )

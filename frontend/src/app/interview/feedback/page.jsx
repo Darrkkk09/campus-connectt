@@ -41,8 +41,11 @@ export default function FeedbackPage() {
 
     if (loading)
         return (
-            <div className="flex items-center justify-center min-h-screen bg-gray-900 text-white">
-                <p>Loading feedback...</p>
+            <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+                <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-[#45e35d] mb-6"></div>
+                <p className="text-gray-300 text-lg tracking-wide">
+                    Loading your Interview Feedback...
+                </p>
             </div>
         );
 

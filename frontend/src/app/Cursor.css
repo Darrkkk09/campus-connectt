@@ -1,0 +1,48 @@
+.cursor-glow {
+    position: fixed;
+    pointer-events: none;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    background: linear-gradient(
+        45deg,
+        #23966c,
+        #faaa54,
+        #e23b4a,
+        #db0768,
+        #360670
+    );
+    mix-blend-mode: lighten;
+    filter: blur(30px);
+    opacity: 0.4;
+    animation: rotateHue 3s linear infinite,
+        scaleGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes rotateHue {
+    0% {
+        filter: hue-rotate(0deg) blur(30px);
+    }
+    50% {
+        filter: hue-rotate(180deg) blur(35px);
+    }
+    100% {
+        filter: hue-rotate(360deg) blur(30px);
+    }
+}
+
+@keyframes scaleGlow {
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 0.5;
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.3;
+    }
+}
