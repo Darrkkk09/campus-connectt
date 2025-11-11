@@ -23,7 +23,7 @@ def home():
 app.include_router(resume_router, prefix="/resume", tags=["Resume"])
 app.include_router(interview_router, prefix="/interview", tags=["Interview"])
 app.include_router(internship_router)  
-app.include_router(coding_routes, prefix="/coding", tags=["Coding Questions"])
+app.include_router(coding_routes, prefix="/coding", tags=["Coding Questions"])
 app.include_router(auth_router, prefix="/auth", tags=["Authentication"])
 
 if __name__ == "__main__":
