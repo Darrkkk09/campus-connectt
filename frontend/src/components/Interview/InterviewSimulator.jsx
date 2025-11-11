@@ -121,7 +121,7 @@ export default function InterviewSimulator({ questions }) {
         try {
             setIsProcessing(true);
             const res = await fetch(
-                "http://127.0.0.1:8000/interview/analyze_feedback",
+                `${process.env.NEXT_PUBLIC_API_URL}/interview/analyze_feedback`,
                 {
                     method: "POST",
                     body: formData,

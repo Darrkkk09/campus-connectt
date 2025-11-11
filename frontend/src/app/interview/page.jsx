@@ -9,9 +9,7 @@ export default function InterviewPage() {
 
     if (questions.length === 0) {
         return <ResumeUploader onQuestionsReady={setQuestions} />;
-
     }
 
     return <InterviewSimulator questions={questions} />;
 }
-

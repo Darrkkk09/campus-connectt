@@ -27,7 +27,7 @@ export default function CodingPage() {
 
         try {
             const res = await fetch(
-                "http://127.0.0.1:8000/coding/coding_questions",
+                `${process.env.NEXT_PUBLIC_API_URL}/coding/coding_questions`,
                 {
                     method: "POST",
                     headers: {

@@ -15,7 +15,9 @@ export default function InternshipPortal() {
     useEffect(() => {
         async function fetchJobs() {
             try {
-                const res = await fetch("http://127.0.0.1:8000/jobs/");
+                const res = await fetch(
+                    `${process.env.NEXT_PUBLIC_API_URL}/jobs/`
+                );
                 if (!res.ok) throw new Error("Failed to fetch job listings");
                 const data = await res.json();
                 setJobs(data.jobs || []);

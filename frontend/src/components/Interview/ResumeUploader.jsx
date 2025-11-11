@@ -26,12 +26,13 @@ export default function ResumeUploader({ onQuestionsReady }) {
 
         try {
             const res = await fetch(
-                "http://127.0.0.1:8000/resume/get_interview_questions",
+                `${process.env.NEXT_PUBLIC_API_URL}/resume/get_interview_questions`,
                 {
                     method: "POST",
                     body: formData,
                 }
             );
+
             const data = await res.json();
             if (data.questions) onQuestionsReady(data.questions);
             else alert("Failed to generate questions.");

@@ -10,7 +10,6 @@ router = APIRouter()
 FIREBASE_API_KEY = os.getenv("FIREBASE_API_KEY")
 
 
-# Request body models
 class SignupRequest(BaseModel):
     name: str
     email: str
