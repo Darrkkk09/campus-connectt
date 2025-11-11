@@ -1,8 +1,10 @@
+import os
+import json
 import firebase_admin
 from firebase_admin import credentials, auth
 
+firebase_key_json = os.getenv("FIREBASE_KEY_JSON")
 if not firebase_admin._apps:
-    cred = credentials.Certificate("firebase_key.json")
-    firebase_admin.initialize_app(cred)
-
-firebase_auth = auth
+    cred_dict = json.loads(firebase_key_json)
+    cred = credentials.Certificate(cred_dict)
+    firebase_app = firebase_admin.initialize_app(cred)
