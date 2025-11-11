@@ -1,15 +1,13 @@
 from fastapi import HTTPException, Depends, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from firebase_admin import auth
-from configs.db import firebase_app  # your initialized Firebase app
+from configs.db import firebase_auth, firebase_app  # import both
 
 security = HTTPBearer()
 
 def verify_token(auth_creds: HTTPAuthorizationCredentials = Depends(security)):
     token = auth_creds.credentials
     try:
-        decoded = auth.verify_id_token(token, app=firebase_app)
-        # decoded contains uid, email, and other claims
+        decoded = firebase_auth.verify_id_token(token, app=firebase_app)
         return decoded
     except Exception:
         raise HTTPException(
