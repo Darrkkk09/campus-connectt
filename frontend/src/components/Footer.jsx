@@ -111,14 +111,14 @@ export default function Footer() {
                             <Instagram size={28} />
                         </a>
                         <a
-                            href="https://linkedin.com"
+                            href="https://www.linkedin.com/in/ranjit09/"
                             target="_blank"
                             className="text-gray-400 hover:text-[#45e35d] transition-all"
                         >
                             <Linkedin size={28} />
                         </a>
                         <a
-                            href="https://github.com"
+                            href="https://github.com/Darrkkk09/"
                             target="_blank"
                             className="text-gray-400 hover:text-[#45e35d] transition-all"
                         >
