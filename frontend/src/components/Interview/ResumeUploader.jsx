@@ -117,71 +117,43 @@ export default function ResumeUploader({ onQuestionsReady }) {
                     className="mb-4 w-full bg-gray-700 p-2 rounded h-24 focus:outline-none"
                 />
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="bg-[#04c821] w-full py-2 rounded text-lg font-semibold hover:bg-[#08821c] transition flex justify-center items-center"
-                >
-                    {loading ? (
-                        <svg
-                            className="animate-spin h-5 w-5 text-white"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                        >
-                            <circle
-                                className="opacity-25"
-                                cx="12"
-                                cy="12"
-                                r="10"
-                                stroke="currentColor"
-                                strokeWidth="4"
-                            ></circle>
-                            <path
-                                className="opacity-75"
-                                fill="currentColor"
-                                d="M4 12a8 8 0 018-8v8H4z"
-                            ></path>
-                        </svg>
-                    ) : (
-                        "Start Interview"
-                    )}
-                </button>
+                {/* Start Interview Button */}
+                {!loading ? (
+                    <button
+                        type="submit"
+                        className="bg-[#04c821] w-full py-2 rounded text-lg font-semibold hover:bg-[#08821c] transition-all"
+                    >
+                        Start Interview
+                    </button>
+                ) : (
+                    <div className="flex flex-col items-center justify-center gap-3 mt-2 mb-2">
+                        <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-[#45e35d]"></div>
+                        <p className="text-gray-300 text-sm">
+                            Generating questions...
+                        </p>
+                    </div>
+                )}
             </form>
 
             {/* Go Back Home Button */}
-            <button
-                onClick={() => {
-                    setHomeLoading(true);
-                    router.push("/");
-                }}
-                className="px-6 py-2 text-green-400 rounded transition-all font-semibold border border-green-300 hover:rounded-full flex justify-center items-center"
-            >
-                {homeLoading ? (
-                    <svg
-                        className="animate-spin h-5 w-5 text-green-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                    >
-                        <circle
-                            className="opacity-25"
-                            cx="12"
-                            cy="12"
-                            r="10"
-                            stroke="currentColor"
-                            strokeWidth="4"
-                        ></circle>
-                        <path
-                            className="opacity-75"
-                            fill="currentColor"
-                            d="M4 12a8 8 0 018-8v8H4z"
-                        ></path>
-                    </svg>
-                ) : (
-                    "Go Back Home"
-                )}
-            </button>
+            {!homeLoading ? (
+                <button
+                    onClick={() => {
+                        setHomeLoading(true);
+                        router.push("/");
+                    }}
+                    className="px-6 py-2 text-green-400 rounded-xl transition-all font-semibold border border-green-300 hover:rounded-full hover:bg-[#0a0a0a]"
+                >
+                    ← Go Back Home
+                </button>
+            ) : (
+                <div className="flex flex-col items-center justify-center gap-3 mt-2">
+                    <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-[#45e35d]"></div>
+                    <p className="text-gray-300 text-sm">
+                        Returning to home...
+                    </p>
+                </div>
+            )}
         </div>
     );
 }

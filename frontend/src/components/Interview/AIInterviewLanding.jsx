@@ -27,7 +27,7 @@ export default function AIInterviewLanding() {
                         <span className="text-[#45e35d]">Your Skills</span>
                     </h1>
                     <p className="text-gray-400 text-lg max-w-md mx-auto md:mx-0">
-                        Upload your resume, role, and company details — our AI
+                        Upload your resume, role, and company details - our AI
                         generates interview questions, guides your responses,
                         and provides feedback to help you shine.
                     </p>

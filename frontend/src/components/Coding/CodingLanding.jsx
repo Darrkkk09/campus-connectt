@@ -29,7 +29,7 @@ export default function CodingLanding() {
                     <p className="text-gray-400 text-lg max-w-md mx-auto md:mx-0">
                         Get personalized coding challenges tailored to your
                         skill level, interests, and career goals. Practice
-                        problems are fetched live from top sources — keeping you
+                        problems are fetched live from top sources - keeping you
                         sharp and interview-ready.
                     </p>
 
