@@ -1,8 +1,0 @@
-from fastapi import APIRouter, HTTPException,FastAPI
-
-
-
-router = APIRouter()
-
-@router.get("upload_resume")
-

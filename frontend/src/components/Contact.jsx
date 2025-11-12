@@ -35,7 +35,7 @@ export default function ContactPage() {
                                 href="tel:+916300768805"
                                 className="text-gray-300 hover:text-[#45e35d] transition-colors"
                             >
-                                +91 63007 68805
+                                +91 93817 65548
                             </a>
                         </div>
 
@@ -45,7 +45,7 @@ export default function ContactPage() {
                                 href="mailto:campusconnect@zohomail.in"
                                 className="text-gray-300 hover:text-[#45e35d] transition-colors"
                             >
-                                avinashpappala@gmail.com
+                                ranjitmutchakarla123@gmail.com
                             </a>
                         </div>
                     </div>
